@@ -1,0 +1,14 @@
+{
+  "name": "t900_sky",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clientDev": "cd front && npm run dev",
+    "serverDev": "cd back && npm run dev",
+    "serverCompiled": "",
+    "dev": "concurrently \"npm run clientDev\" \"npm run serverDev\""
+  },
+  "author": "",
+  "license": "ISC"
+}
