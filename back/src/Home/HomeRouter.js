@@ -15,6 +15,14 @@ HomeRouter.post(
    // authMiddleware,
    HomeController.getMonterAddress)
 
+HomeRouter.get("/entrance",
+  // authMiddleware,
+  HomeController.getOneEntrance)
+
+HomeRouter.get("/address",
+  // authMiddleware,
+  HomeController.getAddressEntranceList)
+
  HomeRouter.get("/monter",
    // authMiddleware,
    HomeController.getAllMonter)

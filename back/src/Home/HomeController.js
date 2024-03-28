@@ -1,26 +1,42 @@
 import HomeService from './HomeService.js';
-
-async function perebor(inp) {
-  const home = await HomeService.addVisits(inp)
-  return home
-}
+import fs from 'fs';
 
 class HomeController {
   async addVisits(req, res) {
-    const body = req.body
-    // console.log(body)
-    try {
-      const body = req.body
+    const file = req.files["1"];
+    const filePath = `./uploads/${file.name}`;
 
-      for (let i = 0; i < body.length;) {
-        await perebor(body[i])
-        await i++
+    await fs.writeFile(filePath, file.data, async (err) => {
+      if (err) {
+        return res.status(500).send('Ошибка загрузки файла!');
       }
-      return res.json({message: "done"});
-    } catch (error) {
-      res.status(500).json({message: error.message});
-    }
+
+      await fs.readFile(filePath, function (error, data) {
+        if (error) {  // если возникла ошибка
+          return res.send('jib,rf');
+        }
+
+        const promises = JSON.parse(data).map(e => {
+          return () => new Promise(async function (resolve) {
+            await HomeService.addVisits(e)
+            resolve(null)
+          });
+        })
+
+        async function chain(arr) {
+          const result = [];
+          for (const item of arr) {
+            result.push(await item(result[result.length - 1]));
+          }
+          fs.unlinkSync(filePath)
+        }
+
+        chain(promises)
+        res.send('Файл успешно загружен!')
+      });
+    })
   }
+
 
   async getMonterAddress(req, res) {
     // console.log(req.query.name)
@@ -34,11 +50,30 @@ class HomeController {
     }
   }
 
+  async getOneEntrance(req, res) {
+    try {
+      const entrance = await HomeService.getOneEntrance(req)
+      return res.json(entrance)
+    } catch (error) {
+      res.status(500).json({message: error.message});
+    }
+  }
+
 
   async getAllMonter(req, res) {
     try {
+
       const monter = await HomeService.getAllMonter();
       return res.json(await monter);
+    } catch (error) {
+      res.status(500).json({message: error.message});
+    }
+  }
+
+  async getAddressEntranceList(req, res) {
+    try {
+      const entranceList = await HomeService.getAddressEntranceList(req)
+      return res.json(await entranceList);
     } catch (error) {
       res.status(500).json({message: error.message});
     }

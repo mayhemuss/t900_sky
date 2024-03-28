@@ -4,11 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clientDev": "cd front && npm run dev",
-    "serverDev": "cd back && npm run dev",
+    "clientdev": "cd front && npm run start",
+    "serverdev": "cd back && npm run dev",
     "serverCompiled": "",
     "dev": "concurrently \"npm run clientDev\" \"npm run serverDev\""
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@reduxjs/toolkit": "^2.0.1",
+    "concurrently": "8.2.0"
+  }
 }
