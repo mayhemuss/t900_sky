@@ -37,3 +37,16 @@ a4 VARCHAR(255),
 entrance_id INTEGER,
 FOREIGN KEY (entrance_id) REFERENCES entrance (id)
 );
+
+ALTER TABLE IF EXISTS public.visit
+    OWNER TO mayhemuss;
+
+
+ ALTER TABLE IF EXISTS public.entrance
+    OWNER TO mayhemuss;   
+
+ALTER TABLE IF EXISTS public.home
+    OWNER TO mayhemuss;    
+
+    ALTER TABLE IF EXISTS public.monter
+    OWNER TO mayhemuss;

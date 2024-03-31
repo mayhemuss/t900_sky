@@ -6,7 +6,7 @@ const pool = new pg.Pool(
         password: "mayhem09y",
         host: "localhost",
         port: 5432,
-        database: "montersbill"
+        database: "monters_billing"
     }
 )
 
