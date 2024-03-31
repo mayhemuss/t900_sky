@@ -4,7 +4,7 @@ class monterController {
     async createMonter(req,res){
      try {
       const newMonter = await pool.query('INSERT INTO monter (name) values ($1) RETURNING * ;', ['кирилюк'])
-      res.json(newMonter)
+      res.json(newMonter.rows)
      } catch (error) {
         console.log(error)
       
