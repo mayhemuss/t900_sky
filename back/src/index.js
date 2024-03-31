@@ -2,14 +2,16 @@ import express from 'express';
 import mongoose from 'mongoose';
 import fileUpload from 'express-fileupload';
 import UserRouter from './User/UserRouter.js';
+// import router from './routes/router.js'
 
 import cors from 'cors';
 //import {ConnectionOptions} from "tls";
 import HomeRouter from "./Home/HomeRouter.js";
+import monterRouter from './routes/monterRouter.js';
 
-const DB_URL = 'mongodb://127.0.0.1:27017/t900';
+// const DB_URL = 'mongodb://192.168.0.101:27017/t900';
 const PORT = 5000;
-const BACK_URL = '192.168.0.101';
+const BACK_URL = '192.168.0.74';
 
 const app = express();
 app.use(cors({
@@ -21,18 +23,14 @@ app.use(express.json({limit:'70mb'})); //возможность вставлят
 app.use(express.static('static')); //отдавать картинки
 app.use(fileUpload({})); //возможность вставлять картинки
 
-
-app.use('/api', UserRouter);
-app.use('/api', HomeRouter);
+app.use('/api', monterRouter)
+// app.use('/api', UserRouter);
+// app.use('/api', HomeRouter);
 // app.use('/api', PaymentRouter);
 
 async function startApp() {
   try {
-    await mongoose.connect(DB_URL, {
-
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
-    });
+    
     app.listen(PORT, BACK_URL, () =>
       console.log(`server start at https://${BACK_URL}:${PORT}`),
     );
