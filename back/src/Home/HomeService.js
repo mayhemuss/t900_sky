@@ -4,6 +4,7 @@ import config from '../config.js';
 import MonterList from "./MonterList.js";
 import AddressEntranceList from "./AddressEntranceList.js";
 import fs from "fs";
+import pool from "../db.js"
 
 const generateAccessToken = (id, name) => {
   const payload = {id, name};
@@ -11,11 +12,7 @@ const generateAccessToken = (id, name) => {
 };
 
 
-const parseDate = (rawDate) => {
 
-  // return new Date(rawDate)
-  return rawDate
-}
 
 
 class HomeService {
@@ -25,6 +22,8 @@ class HomeService {
 
     try {
 
+
+      const newMonter = await pool.query('INSERT INTO monter (name) values ($1) RETURNING * ;', ['кирилюк'])
 
 
 

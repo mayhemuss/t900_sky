@@ -4,10 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "npminstfront":"cd front && npm install",
+    "npminstback":"cd back && npm install",
+    "npminst":"npm install",
     "clientdev": "cd front && npm run start",
     "serverdev": "cd back && npm run dev",
     "serverCompiled": "",
-    "dev": "concurrently \"npm run clientDev\" \"npm run serverDev\""
+    "dev": "concurrently \"npm run clientDev\" \"npm run serverdev\"",
+    "inst": "concurrently \"npm run npminstfront\" \"npm run npminstback\" \"npm run npminst\""
   },
   "author": "",
   "license": "ISC",
