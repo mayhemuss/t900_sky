@@ -6,6 +6,9 @@ import cors from 'cors';
 import HomeRouter from "./Home/HomeRouter.js";
 import router from './routes/index.js';
 import dotenv from "dotenv"
+import ErrorMidleware from './middleware/ErrorMidleware.js';
+
+
 
 import db from "./db.js"
 dotenv.config()
@@ -26,6 +29,8 @@ app.use(express.static('static')); //отдавать картинки
 app.use(fileUpload({})); //возможность вставлять картинки
 
 app.use('/api', router)
+
+app.use(ErrorMidleware)
 
 
 async function startApp() {
