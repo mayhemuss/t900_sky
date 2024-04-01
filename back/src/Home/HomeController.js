@@ -3,38 +3,44 @@ import fs from 'fs';
 
 class HomeController {
   async addVisits(req, res) {
-    const file = req.files["1"];
-    const filePath = `./uploads/${file.name}`;
+    try {
+      // console.log(req)
+      const file = req.files.file;
+      const filePath = `./uploads/${file.name}`;
 
-    await fs.writeFile(filePath, file.data, async (err) => {
-      if (err) {
-        return res.status(500).send('Ошибка загрузки файла!');
-      }
-
-      await fs.readFile(filePath, function (error, data) {
-        if (error) {  // если возникла ошибка
-          return res.send('jib,rf');
+      await fs.writeFile(filePath, file.data, async (err) => {
+        if (err) {
+          return res.status(500).send('Ошибка загрузки файла!');
         }
 
-        const promises = JSON.parse(data).map(e => {
-          return () => new Promise(async function (resolve) {
-            await HomeService.addVisits(e)
-            resolve(null)
-          });
-        })
-
-        async function chain(arr) {
-          const result = [];
-          for (const item of arr) {
-            result.push(await item(result[result.length - 1]));
+        await fs.readFile(filePath, function (error, data) {
+          if (error) {  // если возникла ошибка
+            return res.send('jib,rf');
           }
-          fs.unlinkSync(filePath)
-        }
 
-        chain(promises)
-        res.send('Файл успешно загружен!')
-      });
-    })
+          const promises = JSON.parse(data).map(e => {
+            return () => new Promise(async function (resolve) {
+              await HomeService.addVisits(e)
+              resolve(null)
+            });
+          })
+
+          async function chain(arr) {
+            const result = [];
+            for (const item of arr) {
+              result.push(await item(result[result.length - 1]));
+            }
+            fs.unlinkSync(filePath)
+          }
+
+          chain(promises)
+          res.send('Файл успешно загружен!')
+        });
+      })
+    }
+
+
+    catch(e){console.log(e)}
   }
 
 
