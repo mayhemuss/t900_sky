@@ -1,6 +1,6 @@
-import { ApiError } from "../error";
+import { ApiError } from "../error/index.js";
 
-const ErrorMidleware = (err,req,res,next)=>{
+ const ErrorMidleware = (err,req,res,next)=>{
     if (err instanceof ApiError){
        return res.status(err.status).json({message:err.message})
     }

@@ -23,7 +23,7 @@ function InputMonterPage() {
     formData.append('file',  inputFile);
 
     try {
-      const response = await axios.post("http://192.168.0.101:5000/api/home", formData)
+      const response = await axios.post("http://192.168.0.101:5000/api/monter/create", formData)
       console.log(await response)
     } catch (error) {
       console.log({message: error});

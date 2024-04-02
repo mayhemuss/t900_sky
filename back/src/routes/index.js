@@ -1,5 +1,5 @@
 import { Router } from "express";
-import monterController from "../controllers/monter.js";
+import monterController from "../controllers/monterController.js";
 import {monterRouter} from "./monterRouter.js"
 // import MonterController from "../controllers/monter.controller";
 

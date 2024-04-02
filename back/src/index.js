@@ -16,7 +16,7 @@ dotenv.config()
 
 const PORT =process.env.PORT || 5000;
 
-const BACK_URL = '192.168.0.74';
+const BACK_URL = '192.168.0.101';
 
 const app = express();
 app.use(cors({

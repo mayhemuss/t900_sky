@@ -10,7 +10,7 @@
     "clientdev": "cd front && npm run start",
     "serverdev": "cd back && npm run dev",
     "serverCompiled": "",
-    "dev": "concurrently \"npm run clientDev\" \"npm run serverdev\"",
+    "dev": "concurrently \"npm run clientdev\" \"npm run serverdev\"",
     "inst": "concurrently \"npm run npminstfront\" \"npm run npminstback\" \"npm run npminst\""
   },
   "author": "",
