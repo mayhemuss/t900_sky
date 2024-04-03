@@ -25,7 +25,6 @@ const Visit = db.define("visit", {
   id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
   date: {type: DataTypes.STRING, allowNull: false},
   comments: {type: DataTypes.STRING || DataTypes.INTEGER,},
-
   shieldsOk: {type: DataTypes.STRING || DataTypes.INTEGER,},
   shieldsNew: {type: DataTypes.STRING || DataTypes.INTEGER,},
   shieldsReNew: {type: DataTypes.STRING || DataTypes.INTEGER,},
@@ -45,6 +44,9 @@ Entrance.belongsTo(Home)
 
 Entrance.hasMany(Visit)
 Visit.belongsTo(Entrance)
+
+Monter.hasMany(Visit)
+Visit.belongsTo(Monter)
 
 export {Monter, Home, Entrance, Visit}
 

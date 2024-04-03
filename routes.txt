@@ -1,0 +1,15 @@
+post   /api/visits/addAll   - загрузка файла с данными
+
+get    /monters     -список монтеров
+patch   /monters  name ,id   - изменение монтера
+
+get   /home/homes                  -   все дома
+get    /home/home     monterId        - все дома монтера
+patch   /home/home   address, region, numbOfFloors, apartmentsCount   изменение дома
+
+get   /entrance/entrance   homeId     - все парадки дома
+
+get    /visit/visits     entranceId    -все визиты парадки
+get    /visit/visit     monterId, dateStart, dateEnd    - сумма посещений монтера за период
+get    /visit/maxmin    monterId           - рабочие дни монтера
+

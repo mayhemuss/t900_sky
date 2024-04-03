@@ -1,10 +1,8 @@
-import {Home, Visit} from "../models/models.js";
-import {DataTypes} from "sequelize";
-
+import {Visit} from "../models/models.js";
 
 
 class VisitService {
-  async createVisit(req, entranceId) {
+  async createVisit(req, entranceId, monterId) {
     const {
       date,
       shieldsOk,
@@ -14,7 +12,7 @@ class VisitService {
       mirrorNew,
       mirrorReNew,
       stand,
-      a4,
+      a4,comments
     } = req
     try {
       if (date === undefined) return
@@ -32,13 +30,15 @@ class VisitService {
           mirrorReNew,
           stand,
           a4,
+          comments,
+          monterId,
         })
         return await id.id
       } else {
         return await candidateVisit?.dataValues?.id
       }
     } catch (error) {
-      return  {message: error.message};
+      return {message: error.message};
     }
   }
 

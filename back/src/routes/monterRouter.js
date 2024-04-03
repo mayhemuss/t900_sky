@@ -1,11 +1,11 @@
-
-
 import Router from "express"
+
 import monterController from "../controllers/monterController.js";
 
- const monterRouter = new Router()
+const monterRouter = new Router()
 
- monterRouter.post("/create", monterController.createMonter)
+monterRouter.get("/", monterController.getAllMonter)
 
+monterRouter.patch("/", monterController.patchMonter)
 
- export {monterRouter}
+export {monterRouter}

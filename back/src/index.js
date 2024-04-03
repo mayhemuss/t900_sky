@@ -1,9 +1,9 @@
 import express from 'express';
-import {Monter , Home , Entrance , Visit} from "./models/models.js"
+// import {Monter , Home , Entrance , Visit} from "./models/models.js"
 import fileUpload from 'express-fileupload';
-import UserRouter from './User/UserRouter.js';
+// import UserRouter from './User/UserRouter.js';
 import cors from 'cors';
-import HomeRouter from "./Home/HomeRouter.js";
+
 import router from './routes/index.js';
 import dotenv from "dotenv"
 import ErrorMidleware from './middleware/ErrorMidleware.js';
