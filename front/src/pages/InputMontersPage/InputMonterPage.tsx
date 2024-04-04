@@ -1,5 +1,6 @@
 import React, {ChangeEvent, FormEvent, useState} from 'react';
 import axios from "axios";
+import {BACK_URL} from "../../BACK_URL";
 
 
 function InputMonterPage() {
@@ -9,7 +10,7 @@ function InputMonterPage() {
 
     // @ts-ignore
     setInputFile(event.target.files[0])
-    // console.log(event.target.value)
+
   }
 
   async function formHandler(event: FormEvent<HTMLFormElement>) {
@@ -23,7 +24,7 @@ function InputMonterPage() {
     formData.append('file',  inputFile);
 
     try {
-      const response = await axios.post("http://192.168.0.101:5000/api/visits/addAll", formData)
+      const response = await axios.post(`${BACK_URL}/api/visits/addAll`, formData)
       console.log(await response)
     } catch (error) {
       console.log({message: error});
