@@ -13,7 +13,7 @@ const Home = db.define("home", {
   region: {type: DataTypes.STRING,},
   numbOfFloors: {type: DataTypes.STRING,},
   apartmentsCount: {type: DataTypes.STRING,},
-
+  managerCompany: {type: DataTypes.STRING},
 })
 
 const Entrance = db.define("entrance", {

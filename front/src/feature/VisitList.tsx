@@ -40,6 +40,7 @@ function VisitList({entranceId}:VisitListProps) {
     <div style={{display: "flex", flexDirection:"column", gap:"10px"}}>
       {visit !== null ? visit.sort((a,b) => a<b? 1: -1).map((item) => (
         <div style={{display:"flex", flexDirection:"row" , gap:"10px"}} key={item.id}>
+          <div style={{width:"300px", border:"1px solid black"}}>{item.comments}</div>
           <div style={{width:"100px", border:"1px solid black"}}>{item.date}</div>
           <div style={{width:"20px", border:"1px solid black"}}>{item.shieldsOk}</div>
           <div style={{width:"20px", border:"1px solid black"}}>{item.shieldsNew}</div>
