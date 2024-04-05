@@ -12,7 +12,7 @@ class importFileController {
     try {
 
       const file = req.files.file;
-      const filePath = path.resolve(__dirname, "uploads",file.name)
+      const filePath = path.resolve(__dirname, "uploads", file.name)
 
       await fs.writeFile(filePath, file.data, async (err) => {
         if (err) {
@@ -20,39 +20,37 @@ class importFileController {
         }
       })
 
-      await fs.readFile(filePath, function (error, data) {
+      await fs.readFile(filePath, async (error, data) => {
         if (error) {  // если возникла ошибка
           return res.send('ошибка чтения файла');
         }
 
-        const promises = JSON.parse(data).map(e => {
-          return () => new Promise(async function (resolve) {
-
-            const monterId = await MonterService.createMonter(e)
-
-            const homeId = await HomeService.createHome(e, monterId)
-
-            const entranceId = await EntranceService.createEntrance(e, homeId)
-
-            const visitId = await VisitService.createVisit(e, entranceId, monterId)
 
 
-            resolve(null)
-          });
-        })
-
-        async function chain(arr) {
-          const result = [];
-          for (const item of arr) {
-            result.push(await item(result[result.length - 1]));
+        const inserIntoDataBase = async (data) => {
+          try {
+            for (const monter of JSON.parse(data)) {
+              if (monter !== null) {
+                const monterId = await MonterService.createMonter(monter);
+                const homeId = await HomeService.createHome(monter, monterId);
+                const entranceId = await EntranceService.createEntrance(monter, homeId);
+                const visitId = await VisitService.createVisit(monter, entranceId, monterId);
+              }
+            }
+            res.send('Файл успешно загружен!')
+            console.log('Файл успешно загружен!')
+            fs.unlinkSync(filePath)
+          } catch (error) {
+            // fs.unlinkSync(filePath)
+            res.status(500).json({message: error.message});
           }
-          fs.unlinkSync(filePath)
-        }
 
-        chain(promises)
-        res.send('Файл успешно загружен!')
+        };
+
+        inserIntoDataBase(data);
+
+
       })
-
 
 
     } catch

@@ -1,63 +1,54 @@
 import React, {useEffect, useState} from 'react';
 import axios from "axios";
 import {BACK_URL} from "../BACK_URL";
-import EntranceList from "./EntranceList";
+import OneAdress from "./OneAdress";
+import {AllHomeType} from "../app/types/Types";
+
 
 interface AdressListProps {
-  /** The text to display inside the button */
   currentMonter: string | number;
-
+  dateEnd: string;
+  dateStart: string;
 }
 
-interface AllHome {
-  id: string | number
-  address: string
-  region: string
-  numbOfFloors: string
-  apartmentsCount: string
-  createdAt: string
-  updateAt: string
-}
-
-function AddressList({currentMonter}: AdressListProps) {
 
 
-  const [home, setHome] = useState<AllHome[] | null>(null);
+function AddressList({currentMonter, dateEnd, dateStart}: AdressListProps) {
+
+
+  const [homeList, setHomeList] = useState<AllHomeType | null>(null);
+
+
+  const [arrAdress, setArrAdress] = useState<string[] | []>([]);
+
   useEffect(() => {
     try {
       axios
-        .get(`${BACK_URL}/api/home/home`, {params: {monterId: currentMonter}})
-        .then(responce => setHome(responce.data))
+        .get(`${BACK_URL}/api/monters/mont`, {params: {monterId: currentMonter, dateEnd, dateStart}})
+        .then(responce => {
+          setHomeList(responce.data)
+          setArrAdress( Object.keys(responce.data.homes))
+        })
 
     } catch (error) {
       alert({error});
     }
 
 
-  }, [currentMonter]);
+  }, [currentMonter, dateEnd, dateStart]);
 
-  return (    <div>
-      {home !== null ? home.slice(0,10).map(e=>{return <div style={{display:"flex", flexDirection:"row", gap:"15px"}} key={e.address}>
-        <div style={{width:"150px"}}>{e.region}</div>
-        <div style={{width:"200px"}}>{e.address}</div>
-        <div style={{width:"20px"}}>{e.numbOfFloors}</div>
-        <div style={{width:"20px"}}>{e.apartmentsCount}</div>
-        <EntranceList homeId={e.id}/>
-      </div> }):<></>}
+  return <div>
+    {homeList !== null && arrAdress.length>0 ? <div style={{display:"flex", flexDirection:"column", gap:"5px"}}>{
+      arrAdress.map(adress=>{
+        const {home, entrances} = homeList?.homes[adress]
 
-    </div>
 
-  );
+        return <OneAdress key={home.address+home.id} home={home}  entrances={entrances}/>
+      })
+    }</div> :<></>}
 
-  // return ( <div>    {home !== null ? home.map(e => {
-  // return (<div key={e.address}>
-  //   <div>{e.address}</div>
-  //   <div>{e.numbOfFloors}</div>
-  //   <div></div>
-  //   <div>) })
-  //     : <></>}
-  //
-  //   </div>
-  //   );
+  </div>
+
 }
-  export default AddressList;
+
+export default AddressList;

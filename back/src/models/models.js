@@ -1,15 +1,14 @@
 import {DataTypes} from "sequelize";
 import db from "../db.js";
 
-const Monter = db.define('monter',
-  {
-    id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-    name: {type: DataTypes.STRING, unique: true, allowNull: false}
-  })
+const Monter = db.define('monter', {
+  id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+  name: {type: DataTypes.STRING, unique: true, allowNull: false}
+})
 
 const Home = db.define("home", {
   id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
-  address: {type: DataTypes.STRING, unique: true, allowNull: false},
+  address: {type: DataTypes.STRING, allowNull: false},
   region: {type: DataTypes.STRING,},
   numbOfFloors: {type: DataTypes.STRING,},
   apartmentsCount: {type: DataTypes.STRING,},
