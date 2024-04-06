@@ -11,7 +11,7 @@ class VisitService {
     try {
       if (date === undefined) return
       const candidateVisit = await Visit
-        .findOne({entranceId, date})
+        .findOne({where:{entranceId, date}})
 
       if (!candidateVisit) {
         const id = await Visit.create({

@@ -39,7 +39,7 @@ function AddressList({currentMonter, dateEnd, dateStart}: AdressListProps) {
 
   return <div>
     {homeList !== null && arrAdress.length>0 ? <div style={{display:"flex", flexDirection:"column", gap:"5px"}}>{
-      arrAdress.map(adress=>{
+      arrAdress.sort((a,b)=>a>b?1:-1).map(adress=>{
         const {home, entrances} = homeList?.homes[adress]
 
 

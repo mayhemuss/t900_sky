@@ -13,3 +13,10 @@ get    /visit/visits     entranceId    -все визиты парадки
 get    /visit/visit     monterId, dateStart, dateEnd    - сумма посещений монтера за период
 get    /visit/maxmin    monterId           - рабочие дни монтера
 
+
+
+
+
+get    /home/home    monterId, dateStart, dateEnd    дома с парадками монтера
+
+get    /api/monters/mont   monterId, dateStart, dateEnd    дома, парадки и проходы монтера между дат

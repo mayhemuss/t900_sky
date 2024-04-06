@@ -37,10 +37,12 @@ class importFileController {
                 const visitId = await VisitService.createVisit(monter, entranceId, monterId);
               }
             }
+            fs.unlinkSync(filePath)
             res.send('Файл успешно загружен!')
             console.log('Файл успешно загружен!')
-            fs.unlinkSync(filePath)
+
           } catch (error) {
+            console.log(error)
             // fs.unlinkSync(filePath)
             res.status(500).json({message: error.message});
           }

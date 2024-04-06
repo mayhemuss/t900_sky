@@ -6,7 +6,7 @@ class HomeService {
     const {address, numbOfFloors, apartmentsCount, region} = req
 
     try {
-      const candidateHome = await Home.findOne({address})
+      const candidateHome = await Home.findOne({where: {address}})
       if (!candidateHome) {
         const id = await Home.create({address, numbOfFloors, apartmentsCount, region, monterId})
         return await id.id

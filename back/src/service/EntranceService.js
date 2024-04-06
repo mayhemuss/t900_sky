@@ -6,7 +6,7 @@ class EntranceService {
   async createEntrance(req, homeId) {
     const {numberOfEntrance} = req
     try {
-      const candidateEntrance = await Entrance.findOne({homeId, numberOfEntrance: String(numberOfEntrance)})
+      const candidateEntrance = await Entrance.findOne({where:{homeId, numberOfEntrance: String(numberOfEntrance)}})
       if (!candidateEntrance) {
         const id = await Entrance.create({numberOfEntrance: String(numberOfEntrance), homeId})
         return await id.id
