@@ -5,14 +5,14 @@ import EntranceService from "../service/EntranceService.js";
 import VisitService from "../service/VisitService.js";
 import path from "path";
 
-const __dirname = path.resolve(path.dirname(''));
+const __dirname = path.resolve(path.dirname('.'));
 
 class importFileController {
   async createMonter(req, res) {
     try {
 
       const file = req.files.file;
-      const filePath = path.resolve(__dirname, "uploads", file.name)
+      const filePath = path.resolve(__dirname,"src",  "uploads", file.name)
 
       await fs.writeFile(filePath, file.data, async (err) => {
         if (err) {
@@ -44,7 +44,7 @@ class importFileController {
           } catch (error) {
             console.log(error)
             // fs.unlinkSync(filePath)
-            res.status(500).json({message: error.message});
+            res.status(500).json(error);
           }
 
         };

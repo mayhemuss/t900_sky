@@ -17,12 +17,13 @@ dotenv.config()
 const PORT = 5000
 // process.env.PORT || 5000;
 
-const BACK_URL = '192.168.0.101';
+const BACK_URL = '192.168.0.74';
 
 const app = express();
 const corsOption ={
   origin: ['http://localhost:3000',
     'http://192.168.0.101:3000',
+    'http://192.168.0.74:3000',
     'https://frontdev.mayhemus.keenetic.pro/',
     'http://frontdev.mayhemus.keenetic.pro/',
     '*'],
