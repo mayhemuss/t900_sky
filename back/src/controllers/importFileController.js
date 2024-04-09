@@ -31,7 +31,7 @@ class importFileController {
           try {
             for (const monter of JSON.parse(data)) {
               if (monter !== null) {
-                const monterId = await MonterService.createMonter(monter);
+                const monterId = await MonterService.createMonter({monter});
                 const homeId = await HomeService.createHome(monter, monterId);
                 const entranceId = await EntranceService.createEntrance(monter, homeId);
                 const visitId = await VisitService.createVisit(monter, entranceId, monterId);
@@ -43,7 +43,7 @@ class importFileController {
 
           } catch (error) {
             console.log(error)
-            // fs.unlinkSync(filePath)
+            fs.unlinkSync(filePath)
             res.status(500).json(error);
           }
 

@@ -1,3 +1,4 @@
+import MonterService from "../service/MonterService.js";
 import visitService from "../service/VisitService.js";
 
 class visitController {
@@ -14,8 +15,10 @@ class visitController {
 
   async getDateVisits(req, res) {
     try {
-      const entrance = await visitService.getDateVisitsSumm(req.query)
-      return await res.json(entrance)
+      const {monterId, dateStart, dateEnd} = req.query
+      const name = await MonterService.getMonterName({id : +monterId})
+      const entrance = await visitService.getDateVisitsSumm({monterId, dateStart, dateEnd})
+      return await res.json(await {entrance , name: name.name})
     } catch (error) {
       return res.json(error)
     }
@@ -30,6 +33,8 @@ class visitController {
       return res.json(error)
     }
   }
+
+
 
 }
 

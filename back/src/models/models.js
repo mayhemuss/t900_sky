@@ -23,7 +23,7 @@ const Entrance = db.define("entrance", {
 const Visit = db.define("visit", {
   id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
   date: {type: DataTypes.STRING, allowNull: false},
-  comments: {type: DataTypes.STRING || DataTypes.INTEGER,},
+  comments: {type: DataTypes.TEXT || DataTypes.INTEGER,},
   shieldsOk: {type: DataTypes.STRING || DataTypes.INTEGER,},
   shieldsNew: {type: DataTypes.STRING || DataTypes.INTEGER,},
   shieldsReNew: {type: DataTypes.STRING || DataTypes.INTEGER,},

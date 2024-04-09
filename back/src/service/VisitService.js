@@ -4,7 +4,7 @@ import {Op} from "sequelize";
 
 class VisitService {
   async createVisit(
-    {date, ...rest},
+    {date, comments,  ...rest},
     entranceId,
     monterId) {
 
@@ -18,6 +18,7 @@ class VisitService {
           entranceId,
           monterId,
           date,
+          comments: comments?.slice(254),
           ...rest
         })
         return await id.id
@@ -71,7 +72,8 @@ class VisitService {
           summ.a4 += isNaN(e.a4) ? 0 : +e.a4
         }
       )
-      return entrance
+
+      return await summ
     } catch (error) {
       throw error
     }

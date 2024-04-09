@@ -1,11 +1,11 @@
 import {Monter} from "../models/models.js";
 
 class MonterService {
-  async createMonter(req, res) {
-    const {name} = req
+  async createMonter({name}) {
+    // const {name} = req
     try {
       const candidateMonter = await Monter.findOne({where: {name}})
-
+      console.log(await candidateMonter?.dataValues?.id)
       if (!candidateMonter) {
         const id = await Monter.create({name})
 
@@ -38,9 +38,11 @@ class MonterService {
     }
   }
 
-  async getMonterName({id}) {
+  async getMonterName(req) {
     try {
-      const monter = await Monter.findOne({id})
+      const {id} = req
+      console.log({id})
+      const monter = await Monter.findOne({where:{id}})
       return monter
     } catch (error) {
       throw error
