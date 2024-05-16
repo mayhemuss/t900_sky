@@ -99,6 +99,15 @@ class VisitService {
 
   }
 
+  async Allvisits({dateStart, dateEnd}){
+    try {
+      const visitsArray = await Visit.findAll({where: { date: {[Op.between]: [dateStart, dateEnd]}}})
+      return await visitsArray
+    } catch (error) {
+      throw error
+    }
+  }
+
 }
 
 

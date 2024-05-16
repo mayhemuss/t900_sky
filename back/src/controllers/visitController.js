@@ -33,7 +33,29 @@ class visitController {
       return res.json(error)
     }
   }
+  async Allvisits(req, res){
+    try {
+      const {dateStart, dateEnd} = req.query
+      const set = new Set()
+      const entrances = await visitService.Allvisits({dateStart, dateEnd})
+      const haveads = await entrances.filter(entrance =>  {
+        // return   entrance.shieldsOk ||
+        // entrance.shieldsNew ||
+        // entrance.shieldsReNew ||
+        // return   entrance.mirrorOk ||
+        // entrance.mirrorNew ||
+        // entrance.mirrorReNew 
+        return entrance.stand 
+      }).forEach(entrance => {
+        set.add(entrance.entranceId)
+      })
 
+
+      return await res.json(Array.from( set).length)
+    } catch (error) {
+      return res.json(error)
+    }
+  }
 
 
 }

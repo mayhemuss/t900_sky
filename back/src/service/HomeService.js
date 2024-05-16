@@ -2,13 +2,16 @@ import {Home} from "../models/models.js";
 import {Op} from "sequelize";
 
 class HomeService {
-  async createHome(req, monterId) {
-    const {address, numbOfFloors, apartmentsCount, region} = req
-
+  async createHome(req) {
+    const {address, numbOfFloors, apartmentsCount, region, date, idFromSky} = req
+//     console.log("req")
+// console.log(req)
     try {
       const candidateHome = await Home.findOne({where: {address}})
+      console.log(candidateHome)
       if (!candidateHome) {
-        const id = await Home.create({address, numbOfFloors, apartmentsCount, region, monterId})
+        const id = await Home.create(req)
+          
         return await id.id
       } else {
         return await candidateHome?.dataValues?.id
