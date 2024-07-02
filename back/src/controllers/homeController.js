@@ -1,44 +1,47 @@
-import {Home} from "../models/models.js";
 import HomeService from "../service/HomeService.js";
-import homeService from "../service/HomeService.js";
+
 
 class homeController {
 
-  async createHomes(req,res){
+  async createHomes(req, res) {
     try {
       const homes = JSON.parse(req.files.file.data);
-
-      const inserIntoDataBase = async (data) => {
-        try {
-          for(const home of homes ){
-            const homeId = await HomeService.createHome(home)
-         }
-          // fs.unlinkSync(filePath)
-          res.send('Файл успешно загружен!')
-          console.log('Файл успешно загружен!')
-
-        } catch (error) {
-          console.log(error)
-          // fs.unlinkSync(filePath)
-          res.status(500).json(error);
-        }
-
-      };
-
-      inserIntoDataBase(homes);
-
-
-
-      
-      // console.log(homes)
-       
-       
-      //  return await res.json("done")
+      for (const home of homes) {
+        const homeId = await HomeService.createHome(home)
+      }
+      return await res.json("done")
     } catch (error) {
       console.log(error)
     }
-    
   }
+
+  async homeCheck(req, res) {
+    try {
+
+      const file = req.files.file
+      const homes = JSON.parse(file.data)
+      const allHomes = await HomeService.getAllHome()
+      const allhom = allHomes.map(home => home.address)
+      const clearAddress = new Set(homes.map(e => e.address))
+      const notAllowHomes = Array.from(clearAddress).filter(home => {
+        return !allhom.includes(home)
+      }).sort()
+      res.json(notAllowHomes)
+    } catch (error) {
+      res.status(500).json({message: error.message});
+    }
+  }
+
+  async homeMonterLink(req, res) {
+    try {
+      const monterhome = await HomeService.homeMonterLink(req)
+      return res.json(monterhome)
+
+    } catch (error) {
+      return res.status(500).json({message: error.message});
+    }
+  }
+
 
   async getAllHome(req, res) {
     try {

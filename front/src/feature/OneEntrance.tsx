@@ -18,9 +18,9 @@ function OneEntrance({visits, entrance}: { visits: VisitType[], entrance: string
         display: "flex",
       }}>{entrance}</div>
       <div style={{display: "flex", flexDirection: "column", gap: "5px"}}>
-        {visits.map(visit => {
+        {visits.map((visit , index) => {
 
-          return <OneVisit key={visit.id} visit={visit}/>
+          return <OneVisit index={index} key={visit.id} visit={visit}/>
         })}
       </div>
     </div>

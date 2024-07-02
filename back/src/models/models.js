@@ -10,11 +10,11 @@ const Home = db.define("home", {
   id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
   address: {type: DataTypes.STRING, allowNull: false, unique: true},
   region: {type: DataTypes.STRING,},
-  date:{type: DataTypes.STRING, allowNull: false,},
+  date:{type: DataTypes.STRING, },
   numbOfFloors: {type: DataTypes.STRING,},
   apartmentsCount: {type: DataTypes.STRING,},
   managerCompany: {type: DataTypes.STRING},
-  idFromSky: {type: DataTypes.INTEGER || DataTypes.STRING, allowNull: false, unique: true},
+  idFromSky: {type: DataTypes.INTEGER || DataTypes.STRING, unique: true},
 })
 
 const Entrance = db.define("entrance", {
@@ -42,13 +42,15 @@ const Visit = db.define("visit", {
   mirrorReNew: {type: DataTypes.STRING || DataTypes.INTEGER,},
   stand: {type: DataTypes.STRING || DataTypes.INTEGER,},
   a4: {type: DataTypes.STRING || DataTypes.INTEGER,},
-  adresTable: {type: DataTypes.STRING || DataTypes.INTEGER,},
+  addressTable: {type: DataTypes.STRING || DataTypes.INTEGER,},
   floorTable: {type: DataTypes.STRING || DataTypes.INTEGER,},
   videoTable: {type: DataTypes.STRING || DataTypes.INTEGER,},
 })
 
 const MonterHome = db.define("monter_home",{
   id: {type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true},
+  monterId: {type: DataTypes.INTEGER},
+  homeId: {type: DataTypes.INTEGER},
 })
 
 Home.hasMany(Entrance)
@@ -63,14 +65,21 @@ Visit.belongsTo(Entrance)
 Monter.hasMany(Visit)
 Visit.belongsTo(Monter)
 
-Monter.belongsToMany(Home, {through: MonterHome})
-Home.belongsToMany(Monter, {through: MonterHome})
 
+Home.hasMany(MonterHome)
+MonterHome.belongsTo(Home)
 
-export {Monter, 
-  Home, 
-  Entrance, 
-  Visit, 
-  PercentInfiltrate , 
+Monter.hasMany(MonterHome)
+MonterHome.belongsTo(Monter)
+/*
+
+MonterHome.hasMany(Monter)
+Monter.belongsTo(MonterHome)*/
+
+export {Monter,
+  Home,
+  Entrance,
+  Visit,
+  PercentInfiltrate ,
   MonterHome}
 

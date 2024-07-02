@@ -4,21 +4,21 @@ import {Op} from "sequelize";
 
 class VisitService {
   async createVisit(
-    {date, comments,  ...rest},
+    {date, comments, ...rest},
     entranceId,
     monterId) {
 
     try {
       if (date === undefined) return
       const candidateVisit = await Visit
-        .findOne({where:{entranceId, date}})
+        .findOne({where: {entranceId, date}})
 
       if (!candidateVisit) {
         const id = await Visit.create({
           entranceId,
           monterId,
           date,
-          comments: comments?.slice(254),
+          comments,
           ...rest
         })
         return await id.id
@@ -99,9 +99,9 @@ class VisitService {
 
   }
 
-  async Allvisits({dateStart, dateEnd}){
+  async Allvisits({dateStart, dateEnd}) {
     try {
-      const visitsArray = await Visit.findAll({where: { date: {[Op.between]: [dateStart, dateEnd]}}})
+      const visitsArray = await Visit.findAll({where: {date: {[Op.between]: [dateStart, dateEnd]}}})
       return await visitsArray
     } catch (error) {
       throw error

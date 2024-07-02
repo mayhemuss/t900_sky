@@ -16,7 +16,7 @@ function MontersList() {
   const date = new Date()
   const year = date.getFullYear()
   const month = String(date.getMonth() + 1)
-  const day = String(date.getDay())
+  const day = String(date.getDate())
   const initialdate = `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
 
   const [dateStart, setDateStart] = useState<string>("2000-01-01");
@@ -31,11 +31,11 @@ function MontersList() {
   }, []);
 
   return (
-    <div>
+    <div >
 
       <select onChange={(event) => setCurrentMonter(event.target.value)}>
         {currentMonter ? <></> : <option value={0}>выбери монтера</option>}
-        {monters?.map(e => {
+        {monters?.sort((a, b)=>a.name>b.name?1:-1).map(e => {
           return <option value={e.id} key={e.name}>{e.name}</option>
         })}
       </select>

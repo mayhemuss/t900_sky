@@ -1,59 +1,47 @@
+import {createListFromAdrArray} from "../functions/createListFromAdrArray.js";
 import MonterService from "../service/MonterService.js";
 import HomeService from "../service/HomeService.js";
-import fs from "fs";
 import EntranceService from "../service/EntranceService.js";
 import VisitService from "../service/VisitService.js";
-import path from "path";
 
-const __dirname = path.resolve(path.dirname('.'));
+// const __dirname = path.resolve(path.dirname('.'));
 
 class importFileController {
   async createMonter(req, res) {
     try {
 
-      const file = req.files.file;
-      const filePath = path.resolve(__dirname,"src",  "uploads", file.name)
+      const file = await req.files.file;
+      const parse = createListFromAdrArray(JSON.parse(file.data))
 
-      await fs.writeFile(filePath, file.data, async (err) => {
-        if (err) {
-          return res.status(500).send('Ошибка загрузки файла!');
-        }
-      })
-
-      await fs.readFile(filePath, async (error, data) => {
-        if (error) {  // если возникла ошибка
-          return res.send('ошибка чтения файла');
-        }
-
-
-
-        const inserIntoDataBase = async (data) => {
-          try {
-            for (const monter of JSON.parse(data)) {
-              if (monter !== null) {
-                const monterId = await MonterService.createMonter({monter});
-                const homeId = await HomeService.createHome(monter, monterId);
-                const entranceId = await EntranceService.createEntrance(monter, homeId);
-                const visitId = await VisitService.createVisit(monter, entranceId, monterId);
+      const createMonter = async (obj) => {
+        const result = []
+        const nameList = Object.keys(obj)
+        for (let name of nameList) {
+          const monterId = await MonterService.createMonter({name})
+          const adressList = Object.keys(obj[name])
+          for (let address of adressList) {
+            const homeId = await HomeService.createHome({address})
+            await HomeService.home_Monter({monterId, homeId})
+            const entranceList = Object.keys(obj[name][address])
+            for (let entrance of entranceList) {
+              const entranceId = await EntranceService
+                .createEntrance({numberOfEntrance: entrance}, homeId)
+              const visitList = obj[name][address][entrance]
+              for (let visit of visitList) {
+              const visitId=  await VisitService.createVisit(visit,
+                  entranceId,
+                  monterId)
+                result.push(visitId)
               }
             }
-            fs.unlinkSync(filePath)
-            res.send('Файл успешно загружен!')
-            console.log('Файл успешно загружен!')
-
-          } catch (error) {
-            console.log(error)
-            fs.unlinkSync(filePath)
-            res.status(500).json(error);
           }
+        }
+        return result
+      }
+   const result =   createMonter(parse)
 
-        };
-
-        inserIntoDataBase(data);
-
-
-      })
-
+      console.log(await result)
+      return res.json(result)
 
     } catch
       (error) {

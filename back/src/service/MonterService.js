@@ -4,8 +4,8 @@ class MonterService {
   async createMonter({name}) {
     // const {name} = req
     try {
-      const candidateMonter = await Monter.findOne({where: {name}})
-      console.log(await candidateMonter?.dataValues?.id)
+      const candidateMonter = await Monter.findOne( {where: {name}})
+      // console.log(await candidateMonter?.dataValues?.id)
       if (!candidateMonter) {
         const id = await Monter.create({name})
 
