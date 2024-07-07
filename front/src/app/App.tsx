@@ -1,7 +1,7 @@
 import React from 'react';
 
 import InputMonterPage from "../pages/InputMontersPage/InputMonterPage";
-import MontersList from "../feature/MontersList";
+import MontersList from "../feature/MonterList/ui/MontersList";
 
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
     <div className="App">
 
       <InputMonterPage></InputMonterPage>
-      <MontersList></MontersList>
+
     </div>
   );
 }

@@ -1,6 +1,7 @@
-import {MonterSchema} from "./MonterSchema";
+import {MonterSchema} from "../../feature/MonterList/types/MonterSchema";
+import {AddressesShema} from "../../feature/AddressList/types/AddressesShema";
 
 export interface StateSchema {
-  monter : MonterSchema;
-
+  monter: MonterSchema;
+  addresses: AddressesShema
 }

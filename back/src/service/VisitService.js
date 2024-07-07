@@ -30,20 +30,36 @@ class VisitService {
     }
   }
 
-  async getOneEntranceVisits({entranceId}) {
+  async getOneEntranceVisits({entranceId , monterId}) {
     try {
-      const entrance = await Visit
-        .findAll({where: {entranceId}})
-      return entrance
+      const visits = await Visit
+        .findAll({where: {entranceId, monterId}})
+      // console.log(visits)
+      return visits
     } catch (error) {
       throw error
     }
   }
 
-  async getDateAllVisits({monterId, dateStart, dateEnd}) {
+  async getDateAllVisits({monterId, dateStart, dateEnd, entranceId}) {
     try {
-      const entrances = await Visit.findAll({where: {monterId, date: {[Op.between]: [dateStart, dateEnd]}}})
-      return entrances
+      if(entranceId) {
+        const entrances = await Visit.findAll({
+          where: {
+            monterId, entranceId,
+            date: {[Op.between]: [dateStart, dateEnd]}
+          }
+        })
+        return entrances
+      } else {
+        const entrances = await Visit.findAll({
+          where: {
+            monterId,
+            date: {[Op.between]: [dateStart, dateEnd]}
+          }
+        })
+        return entrances
+      }
     } catch (error) {
       throw error
     }

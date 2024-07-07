@@ -1,7 +1,7 @@
 import React from 'react';
 
 import OneEntrance from "./OneEntrance";
-import {oneHomesType} from "../app/types/Types";
+import {oneHomesType} from "./AddressList/types/AddressesShema";
 
 function OneAdress({home, entrances}: oneHomesType) {
   const entranceArr = Object.keys(entrances)

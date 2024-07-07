@@ -66,8 +66,8 @@ class HomeService {
   async findHome_monter({monterId}) {
 
     try {
-      const monter_home = await MonterHome.findOne({where: {monterId}})
-      return monter_home
+      const monter_home = await MonterHome.findAll({where: {monterId}})
+      return monter_home.map(elem=>elem.homeId)
     } catch (error) {
       throw (error)
     }

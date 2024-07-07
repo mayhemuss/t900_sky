@@ -1,51 +1,19 @@
-import React, {ChangeEvent, FormEvent, useState} from 'react';
-import axios from "axios";
-import {BACK_URL} from "../../BACK_URL";
+import React from 'react';
+import {ImportVisitMonterList} from "../../feature/ImportVisitMonterList";
+import {MontersList} from "../../feature/MonterList";
+import {ChoseCurrentMonters} from "../../feature/AddressList";
+import AddressList from "../../feature/AddressList/ui/AddressList";
 
 
 function InputMonterPage() {
 
-  const [inputFile, setInputFile] = useState< File | null >(null);
-  const inputHandler = (event: ChangeEvent<HTMLInputElement>) => {
-
-    // @ts-ignore
-    setInputFile(event.target.files[0])
-
-  }
-
-  async function formHandler(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-
-    const name = inputFile?.name
-    console.log(name)
-    const formData = new FormData();
-
-    // @ts-ignore
-    formData.append('file',  inputFile);
-
-    try {
-      const response = await axios.post(`${BACK_URL}/api/visits/addAll`, formData)
-      console.log(await response)
-    } catch (error) {
-      console.log({message: error});
-    }
-
-
-  }
 
   return (
     <div>
-      <form onSubmit={formHandler}>
-        файл json из отчета:
-        <input
-          type="file"
-          onChange={inputHandler}
-        />
-        <button type="submit">
-          Сохранить и закрыть
-        </button>
-
-      </form>
+      <ImportVisitMonterList/>
+      <MontersList/>
+      <ChoseCurrentMonters/>
+      <AddressList/>
     </div>
   );
 }

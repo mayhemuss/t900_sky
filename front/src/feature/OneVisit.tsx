@@ -1,5 +1,5 @@
 import React from 'react';
-import {VisitType} from "../app/types/Types";
+import {VisitType} from "./AddressList/types/AddressesShema";
 
 
 function OneVisit({visit, index}: { visit: VisitType, index: number }) {

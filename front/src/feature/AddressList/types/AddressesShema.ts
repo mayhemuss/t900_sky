@@ -11,7 +11,7 @@ export interface HomeType {
 }
 
 export interface VisitType {
-  "id": number
+  "id": number | null
   "date": string
   "comments": string | null
   "shieldsOk": string | null | number
@@ -22,19 +22,34 @@ export interface VisitType {
   "mirrorReNew": string | null | number
   "stand": string | null | number
   "a4": string | null | number
-  "createdAt": string
-  "updatedAt": string
-  "entranceId": number
-  "monterId": number
+  "createdAt": string | null
+  "updatedAt": string | null
+  "entranceId": number | null
+  "monterId": number | null
 }
 
 
 export interface oneHomesType {
   home: HomeType
   entrances: Record<string, VisitType[]>
+
 }
 
 export interface AllHomeType {
   name: string
   homes: Record<string, oneHomesType>
+  count: number
+}
+
+export interface AddressesShema {
+  currentMonter: string | number,
+  isLoading: boolean,
+  addressList: AllHomeType | undefined,
+  dateStart: string,
+  dateEnd: string
+  error?: string | undefined;
+  page: number,
+  limit: number,
+  pageCount: number,
+  arrPageCount: {value: number, numberChild: number}[]
 }

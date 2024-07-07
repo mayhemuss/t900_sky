@@ -1,7 +1,7 @@
 import React from 'react';
 
 import OneVisit from "./OneVisit";
-import {VisitType} from "../app/types/Types";
+import {VisitType} from "./AddressList/types/AddressesShema";
 
 
 function OneEntrance({visits, entrance}: { visits: VisitType[], entrance: string }) {
